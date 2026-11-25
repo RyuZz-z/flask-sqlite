@@ -1,12 +1,12 @@
 # 📒 Mon carnet de bord
 
-**Nom :** 
+**Nom :GLOUZOUIC
 
-**Prénom :** 
+**Prénom :Mateo
 
-**Adresse de mon site :** https://______.pythonanywhere.com
+**Adresse de mon site :** https://ryuzz.pythonanywhere.com
 
-**Adresse de mon dépôt GitHub :** https://github.com/______
+**Adresse de mon dépôt GitHub :** https://github.com/RyuZz-z
 
 > Modifiez ce fichier directement sur GitHub (icône crayon ✏️) pour répondre aux questions de chaque exercice.
 > Écrivez avec vos propres mots : une réponse courte et juste vaut mieux qu'un long copier-coller ! 🙂
@@ -17,19 +17,19 @@
 
 1. Expliquez avec vos mots la différence entre une **table**, une **colonne** et une **ligne**.
 
-   > _Ma réponse :_ 
+   > _Ma réponse :_ Une tables c'est un tableau qui contient différentes lignes et colonnes
 
 2. À quoi sert la clé primaire `id` ? Pourquoi ne pas simplement identifier un client par son nom ?
 
-   > _Ma réponse :_ 
+   > _Ma réponse :_ L'ID permet de pouvoir différencier les clients entre eux et aussi d'éviter qu'en faisant une recherche par nom ou prénom ou adresse on retrouve plusieurs clients.
 
 3. Pourquoi votre client ajouté en console est-il apparu sur le site ?
 
-   > _Ma réponse :_ 
+   > _Ma réponse :_ Notre client ajouté en console est apparu sur le site car nous l'avons écrit dans sa database directement et les deux étant liés cela remonte instinctivement.
 
 4. Que signifie `NOT NULL` dans `schema.sql` ? Quelle erreur avez-vous obtenue avec `INSERT INTO clients (nom) VALUES ('TEST');` ?
 
-   > _Ma réponse :_ 
+   > _Ma réponse :_ NOT NULL oblige une colonne à avoir une valeur ; j'ai eu l'erreur NOT NULL constraint failed: clients.prenom car je n'ai pas donné de prenom
 
 🧩 **Défi** — mes requêtes / ma solution :
 
