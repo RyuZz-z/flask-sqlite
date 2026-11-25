@@ -111,7 +111,7 @@ def enregistrer_client():
 #  Ajoutez vos nouvelles routes ci-dessous 👇
 # ---------------------------------------------------------------
 
-@app.route('/fiche_nom/DUPONT')
+@app.route('/fiche_nom/dupont')
 def fiche_nom(nom):
     conn = get_db()
     cursor = conn.cursor()
