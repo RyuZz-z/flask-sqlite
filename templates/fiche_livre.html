@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titre %}{{ livre['titre'] }}{% endblock %}
+{% block contenu %}
+    <h1>{{ livre['titre'] }}</h1>
+    <p><strong>Auteur :</strong> {{ livre['auteur'] }}</p>
+    <p><strong>Année :</strong> {{ livre['annee'] or '-' }} · <strong>Genre :</strong> {{ livre['genre'] or '-' }} · <strong>ISBN :</strong> {{ livre['isbn'] or '-' }}</p>
+    <p><strong>Disponibilité :</strong> {{ livre['nb_disponibles'] }} exemplaire(s) disponible(s) sur {{ livre['nb_exemplaires'] }}</p>
+
+    {% if livre['nb_disponibles'] > 0 %}
+        <form action="/livres/{{ livre['id'] }}/emprunter" method="post">
+            <button type="submit">📖 Emprunter ce livre</button>
+        </form>
+    {% else %}
+        <p class="erreur">Tous les exemplaires sont empruntés.</p>
+    {% endif %}
+
+    {% if session.get('role') == 'admin' %}
+        <h2>Administration</h2>
+        <div class="actions">
+            <a href="/livres/{{ livre['id'] }}/modifier">✏️ Modifier / stock</a>
+            <form action="/livres/{{ livre['id'] }}/supprimer" method="post"
+                  onsubmit="return confirm('Supprimer ce livre ?');">
+                <button type="submit">🗑️ Supprimer</button>
+            </form>
+        </div>
+
+        <h3>Historique des emprunts ({{ emprunts|length }})</h3>
+        {% if emprunts %}
+        <table>
+            <tr><th>Lecteur</th><th>Emprunté le</th><th>Retour prévu</th><th>Rendu le</th></tr>
+            {% for e in emprunts %}
+            <tr>
+                <td>{{ e['prenom'] }} {{ e['nom'] }} ({{ e['login'] }})</td>
+                <td>{{ e['date_emprunt'] }}</td>
+                <td>{{ e['date_retour_prevue'] }}</td>
+                <td>{{ e['date_retour'] or 'en cours' }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+        {% endif %}
+    {% endif %}
+
+    <p><a href="/livres">← Retour au catalogue</a></p>
+{% endblock %}

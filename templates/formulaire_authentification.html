@@ -2,10 +2,13 @@
 {% block titre %}Authentification{% endblock %}
 {% block contenu %}
     <h2>Authentification</h2>
+    {% if request.args.get('next') and not error %}
+        <p>Connectez-vous pour accéder à cette page (comptes de test : <code>admin</code> / <code>password</code> ou <code>user</code> / <code>12345</code>).</p>
+    {% endif %}
     {% if error %}
         <p class="erreur">Identifiant ou mot de passe incorrect.</p>
     {% endif %}
-    <form action="{{ url_for('authentification') }}" method="post">
+    <form action="{{ url_for('authentification', next=request.args.get('next')) }}" method="post">
         <label for="username">Nom d'utilisateur :</label>
         <input type="text" id="username" name="username" required><br><br>
         <label for="password">Mot de passe :</label>

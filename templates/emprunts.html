@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+{% block titre %}Emprunts en cours{% endblock %}
+{% block contenu %}
+    <h1>Emprunts en cours ({{ emprunts|length }})</h1>
+    <table>
+        <tr><th>Livre</th><th>Lecteur</th><th>Emprunté le</th><th>Retour prévu</th><th></th></tr>
+        {% for e in emprunts %}
+        <tr>
+            <td><a href="/livres/{{ e['livre_id'] }}">{{ e['titre'] }}</a></td>
+            <td>{{ e['prenom'] }} {{ e['nom'] }} ({{ e['login'] }})</td>
+            <td>{{ e['date_emprunt'] }}</td>
+            <td>{{ e['date_retour_prevue'] }}{% if e['en_retard'] %} <span class="erreur">⏰ en retard</span>{% endif %}</td>
+            <td>
+                <form action="/emprunts/{{ e['id'] }}/rendre" method="post" style="margin:0">
+                    <input type="hidden" name="retour" value="/emprunts">
+                    <button type="submit">↩️ Marquer rendu</button>
+                </form>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>📊 Les livres les plus empruntés</h2>
+    <ol>
+        {% for livre in top %}
+            <li><a href="/livres/{{ livre['id'] }}">{{ livre['titre'] }}</a> : {{ livre['nb'] }} emprunt(s)</li>
+        {% else %}
+            <li>Aucun emprunt pour l'instant.</li>
+        {% endfor %}
+    </ol>
+{% endblock %}

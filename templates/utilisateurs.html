@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block titre %}Utilisateurs{% endblock %}
+{% block contenu %}
+    <h1>Utilisateurs</h1>
+    <table>
+        <tr><th>Login</th><th>Nom</th><th>Prénom</th><th>Rôle</th><th>Emprunts en cours</th><th></th></tr>
+        {% for u in utilisateurs %}
+        <tr>
+            <td>{{ u['login'] }}</td>
+            <td>{{ u['nom'] or '-' }}</td>
+            <td>{{ u['prenom'] or '-' }}</td>
+            <td>{{ u['role'] }}</td>
+            <td class="nombre">{{ u['nb_en_cours'] }}</td>
+            <td>
+                {% if u['id'] != session.get('utilisateur_id') %}
+                <form action="/utilisateurs/{{ u['id'] }}/supprimer" method="post" style="margin:0"
+                      onsubmit="return confirm('Supprimer le compte {{ u['login'] }} ?');">
+                    <button type="submit">🗑️ Supprimer</button>
+                </form>
+                {% else %}<small>(vous)</small>{% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h2>Créer un compte</h2>
+    {% if erreur %}<p class="erreur">{{ erreur }}</p>{% endif %}
+    <form method="post">
+        <label for="login">Login :</label>
+        <input type="text" id="login" name="login" value="{{ saisie['login'] if saisie else '' }}" required><br><br>
+        <label for="nom">Nom :</label>
+        <input type="text" id="nom" name="nom" value="{{ saisie['nom'] if saisie else '' }}" required><br><br>
+        <label for="prenom">Prénom :</label>
+        <input type="text" id="prenom" name="prenom" value="{{ saisie['prenom'] if saisie else '' }}" required><br><br>
+        <label for="mot_de_passe">Mot de passe :</label>
+        <input type="password" id="mot_de_passe" name="mot_de_passe" minlength="5" required><br><br>
+        <label for="role">Rôle :</label>
+        <select id="role" name="role">
+            <option value="user">Lecteur (user)</option>
+            <option value="admin">Administrateur (admin)</option>
+        </select><br><br>
+        <button type="submit">Créer le compte</button>
+    </form>
+{% endblock %}

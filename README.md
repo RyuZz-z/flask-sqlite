@@ -1,3 +1,95 @@
+# 📚 Mon application : clients + bibliothèque
+
+**Application en ligne :** https://ryuzz.pythonanywhere.com · **Auteur :** Mateo GLOUZOUIC
+
+| Compte de test | Mot de passe | Rôle |
+|---|---|---|
+| `admin` | `password` | Administrateur : tout gérer |
+| `user` | `12345` | Lecteur |
+| `lea` | `12345` | Lectrice (avec un emprunt en retard) |
+
+### Fonctionnalités réalisées
+
+- ✅ **F1 / F2** : ajouter, modifier, supprimer un livre et gérer son nombre d'exemplaires (admin)
+- ✅ **F3** : catalogue avec recherche par titre ou auteur et disponibilité calculée
+- ✅ **F4 / F5 / F6** : emprunter, rendre, « Mes emprunts » (en cours + historique)
+- ✅ **F7 / F8** : gestion des utilisateurs (mots de passe hachés) et rôles user / admin
+- ✅ **F9** : API JSON des livres
+- ✅ **Règles R1 à R5** : refus avec un message clair (409 / 400 / 403), jamais d'erreur 500
+- ✅ **Bonus** : liste des retards (admin) + alerte pour le lecteur, top 5 des livres les plus empruntés
+- ✅ Gestion des clients (exercices 2 à 9) : CRUD, recherche, commandes, statistiques, API
+- ❌ Non réalisé : réservation d'un livre indisponible, recommandations
+
+### Schéma de la base
+
+```mermaid
+erDiagram
+    UTILISATEURS ||--o{ EMPRUNTS : "effectue"
+    LIVRES ||--o{ EMPRUNTS : "fait l'objet de"
+    CLIENTS ||--o{ COMMANDES : "passe"
+    LIVRES {
+        int id PK
+        text titre
+        text auteur
+        text isbn
+        int annee
+        text genre
+        int nb_exemplaires
+    }
+    UTILISATEURS {
+        int id PK
+        text login
+        text nom
+        text prenom
+        text mot_de_passe_hash
+        text role
+    }
+    EMPRUNTS {
+        int id PK
+        int livre_id FK
+        int utilisateur_id FK
+        timestamp date_emprunt
+        date date_retour_prevue
+        timestamp date_retour
+    }
+    CLIENTS {
+        int id PK
+        timestamp created
+        text nom
+        text prenom
+        text adresse
+        text telephone
+    }
+    COMMANDES {
+        int id PK
+        int client_id FK
+        text produit
+        real montant
+        timestamp date_commande
+    }
+```
+
+La structure évolue avec les scripts numérotés du dossier `migrations/`, appliqués automatiquement (une seule fois) au démarrage : les données du serveur ne sont jamais effacées.
+
+### Routes
+
+| Route | Accès | Rôle |
+|---|---|---|
+| `/livres` (`?q=`) · `/livres/<id>` | connecté | Catalogue, recherche, fiche d'un livre |
+| `POST /livres/<id>/emprunter` · `POST /emprunts/<id>/rendre` | connecté | Emprunter / rendre |
+| `/mes_emprunts` | connecté | Mes emprunts |
+| `/livres/nouveau` · `/livres/<id>/modifier` · `POST /livres/<id>/supprimer` | admin | Gestion des livres |
+| `/emprunts` | admin | Emprunts en cours, retards, top 5 |
+| `/utilisateurs` · `POST /utilisateurs/<id>/supprimer` | admin | Gestion des comptes |
+| `/consultation/` · `/fiche_client/<id>` · `/recherche` · `/commandes/` · `/statistiques/` | connecté | Clients et commandes |
+| `/enregistrer_client` · `/modifier_client/<id>` · `POST /supprimer_client/<id>` | admin | Gestion des clients |
+| `/authentification` · `/deconnexion` | tous | Connexion |
+| `GET /api/livres` (`?q=`) · `GET /api/livres/<id>` | tous | API livres (avec disponibilité) |
+| `GET /api/clients` (`?q=`) · `GET /api/clients/<id>` | tous | API clients |
+| `POST /api/clients` · `DELETE /api/clients/<id>` | admin | API clients (écriture) |
+
+---
+
 # 🗄️ Atelier « Flask + SQLite » : construire une application avec une base de données
 
 Bienvenue ! 👋

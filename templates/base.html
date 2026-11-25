@@ -24,13 +24,18 @@
     <nav>
         <a href="/">🏠 Accueil</a>
         {% if session.get('role') in ['user', 'admin'] %}
+            <a href="/livres">📚 Livres</a>
+            <a href="/mes_emprunts">Mes emprunts</a>
+            <span>|</span>
             <a href="/consultation/">Clients</a>
             <a href="/recherche">Recherche</a>
             <a href="/commandes/">Commandes</a>
             <a href="/statistiques/">Statistiques</a>
         {% endif %}
         {% if session.get('role') == 'admin' %}
-            <a href="/enregistrer_client">➕ Nouveau client</a>
+            <span>|</span>
+            <a href="/emprunts">Emprunts</a>
+            <a href="/utilisateurs">Utilisateurs</a>
         {% endif %}
         <span class="compte">
             {% if session.get('authentifie') %}

@@ -38,7 +38,8 @@ connection.commit()
 connection.close()
 
 # Les migrations ajoutent les commandes d'exemple et les comptes
-# de démonstration (admin / password, user / 12345).
+# de démonstration (admin / password, user / 12345, lea / 12345),
+# ainsi que les livres et emprunts d'exemple de la bibliothèque.
 appliquer_migrations(DATABASE)
 
 print("✅ Base de données créée : database.db")

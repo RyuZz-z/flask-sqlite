@@ -2,6 +2,18 @@
 {% block contenu %}
     <h1>Hello from Flask Server ! 🚀</h1>
     <p>Votre application est en ligne. Voici les pages disponibles :</p>
+
+    <h2>📚 Bibliothèque</h2>
+    <ul>
+        <li><a href="/livres">/livres</a> : le catalogue, la disponibilité et la recherche (ex : <a href="/livres?q=petit">petit</a>)</li>
+        <li><a href="/mes_emprunts">/mes_emprunts</a> : mes emprunts en cours et mon historique</li>
+        <li><a href="/livres/nouveau">/livres/nouveau</a> : ajouter un livre (admin)</li>
+        <li><a href="/emprunts">/emprunts</a> : tous les emprunts en cours, les retards et les livres les plus empruntés (admin)</li>
+        <li><a href="/utilisateurs">/utilisateurs</a> : gérer les comptes (admin)</li>
+        <li><a href="/api/livres">/api/livres</a> et <a href="/api/livres/1">/api/livres/1</a> : l'API JSON des livres</li>
+    </ul>
+
+    <h2>👥 Gestion des clients</h2>
     <ul>
         <li><a href="/consultation/">/consultation/</a> : la liste des clients</li>
         <li><a href="/fiche_client/1">/fiche_client/1</a> : la fiche du client n°1 (avec ses commandes)</li>
@@ -22,5 +34,5 @@
         <li><a href="/clients_js">/clients_js</a> : une page qui utilise l'API en JavaScript</li>
     </ul>
 
-    <p>Comptes de test : <code>admin</code> / <code>password</code> (tous les droits) et <code>user</code> / <code>12345</code> (consultation seulement).</p>
+    <p>Comptes de test : <code>admin</code> / <code>password</code> (tous les droits) et <code>user</code> / <code>12345</code> et <code>lea</code> / <code>12345</code> (lecteurs).</p>
 {% endblock %}
