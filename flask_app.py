@@ -111,14 +111,6 @@ def enregistrer_client():
 #  Ajoutez vos nouvelles routes ci-dessous 👇
 # ---------------------------------------------------------------
 
-@app.route('/fiche_nom/dupont')
-def fiche_nom(nom):
-    conn = get_db()
-    cursor = conn.cursor()
-    cursor.execute('SELECT * FROM clients WHERE nom = ?', (nom,))
-    data = cursor.fetchall()
-    conn.close()
-    return render_template('read_data.html', data=data)
 
 # ---------------------------------------------------------------
 #  Ne pas modifier : utile seulement pour lancer le site
