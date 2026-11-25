@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block titre %}Flask + SQLite{% endblock %}</title>
+    <style>
+        body { font-family: system-ui, sans-serif; max-width: 1000px; margin: 0 auto; padding: 0 16px 40px; color: #222; }
+        nav { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; padding: 12px 0; border-bottom: 1px solid #ddd; margin-bottom: 20px; }
+        nav .compte { margin-left: auto; color: #555; }
+        a { color: #1a5fb4; }
+        table { border-collapse: collapse; margin: 12px 0; }
+        th, td { border: 1px solid #ccc; padding: 6px 12px; text-align: left; vertical-align: top; }
+        th { background: #f0f0f0; }
+        td.nombre { text-align: right; }
+        .actions { display: flex; gap: 6px; align-items: center; }
+        .actions form { margin: 0; }
+        .erreur { color: #c01c28; font-weight: bold; }
+        label { display: inline-block; min-width: 90px; }
+        input, select, button { font: inherit; padding: 4px 8px; }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="/">🏠 Accueil</a>
+        {% if session.get('role') in ['user', 'admin'] %}
+            <a href="/consultation/">Clients</a>
+            <a href="/recherche">Recherche</a>
+            <a href="/commandes/">Commandes</a>
+            <a href="/statistiques/">Statistiques</a>
+        {% endif %}
+        {% if session.get('role') == 'admin' %}
+            <a href="/enregistrer_client">➕ Nouveau client</a>
+        {% endif %}
+        <span class="compte">
+            {% if session.get('authentifie') %}
+                👤 {{ session.get('utilisateur') }} ({{ session.get('role') }}) · <a href="/deconnexion">Se déconnecter</a>
+            {% else %}
+                <a href="/authentification">Se connecter</a>
+            {% endif %}
+        </span>
+    </nav>
+    {% block contenu %}{% endblock %}
+</body>
+</html>

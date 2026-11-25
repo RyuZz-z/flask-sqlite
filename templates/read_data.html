@@ -1,15 +1,6 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Clients</title>
-    <style>
-        table { border-collapse: collapse; }
-        th, td { border: 1px solid #ccc; padding: 6px 12px; }
-        th { background: #f0f0f0; }
-    </style>
-</head>
-<body>
+{% extends "base.html" %}
+{% block titre %}Clients{% endblock %}
+{% block contenu %}
     <h1>Liste des Clients</h1>
     <p>{{ data|length }} client(s) dans la base.</p>
     <table>
@@ -19,6 +10,8 @@
             <th>Nom</th>
             <th>Prénom</th>
             <th>Adresse</th>
+            <th>Téléphone</th>
+            {% if session.get('role') == 'admin' %}<th>Actions</th>{% endif %}
         </tr>
         {% for row in data %}
         <tr>
@@ -27,8 +20,19 @@
             <td><a href="/fiche_client/{{ row['id'] }}">{{ row['nom'] }}</a></td>
             <td>{{ row['prenom'] }}</td>
             <td>{{ row['adresse'] }}</td>
+            <td>{{ row['telephone'] or '-' }}</td>
+            {% if session.get('role') == 'admin' %}
+            <td>
+                <div class="actions">
+                    <a href="/modifier_client/{{ row['id'] }}">✏️ Modifier</a>
+                    <form action="/supprimer_client/{{ row['id'] }}" method="post"
+                          onsubmit="return confirm('Supprimer ce client ?');">
+                        <button type="submit">🗑️ Supprimer</button>
+                    </form>
+                </div>
+            </td>
+            {% endif %}
         </tr>
         {% endfor %}
     </table>
-</body>
-</html>
+{% endblock %}

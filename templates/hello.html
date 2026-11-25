@@ -1,22 +1,26 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Flask + SQLite</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block contenu %}
     <h1>Hello from Flask Server ! 🚀</h1>
     <p>Votre application est en ligne. Voici les pages disponibles :</p>
     <ul>
         <li><a href="/consultation/">/consultation/</a> : la liste des clients</li>
-        <li><a href="/fiche_client/1">/fiche_client/1</a> : la fiche du client n°1</li>
-        <li><a href="/enregistrer_client">/enregistrer_client</a> : enregistrer un nouveau client</li>
+        <li><a href="/fiche_client/1">/fiche_client/1</a> : la fiche du client n°1 (avec ses commandes)</li>
+        <li><a href="/fiche_nom/DUPONT">/fiche_nom/DUPONT</a> : les clients qui s'appellent DUPONT</li>
+        <li><a href="/recherche">/recherche</a> : rechercher un client par nom ou prénom</li>
+        <li><a href="/enregistrer_client">/enregistrer_client</a> : enregistrer un nouveau client (admin)</li>
+        <li><a href="/commandes/">/commandes/</a> : toutes les commandes</li>
+        <li><a href="/statistiques/">/statistiques/</a> : nombre de commandes et total par client</li>
         <li><a href="/lecture">/lecture</a> : une page protégée</li>
         <li><a href="/authentification">/authentification</a> : se connecter</li>
-        <li><a href="/fiche_nom/DUPONT">/fiche_nom/DUPONT</a> : rechercher un client par nom</li>
-        <li><a href="/recherche">/recherche</a> : rechercher un client par nom ou prénom</li>
-         <li><a href="/fiche_nom/DUPONT">/fiche_nom/DUPONT</a> : rechercher un client par nom</li>
+        <li><a href="/deconnexion">/deconnexion</a> : se déconnecter</li>
     </ul>
-</body>
-</html>
+
+    <h2>API JSON</h2>
+    <ul>
+        <li><a href="/api/clients">/api/clients</a> : la liste des clients (<a href="/api/clients?q=dup">/api/clients?q=dup</a> pour filtrer)</li>
+        <li><a href="/api/clients/2">/api/clients/2</a> : le client n°2</li>
+        <li><a href="/clients_js">/clients_js</a> : une page qui utilise l'API en JavaScript</li>
+    </ul>
+
+    <p>Comptes de test : <code>admin</code> / <code>password</code> (tous les droits) et <code>user</code> / <code>12345</code> (consultation seulement).</p>
+{% endblock %}

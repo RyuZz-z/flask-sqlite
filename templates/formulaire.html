@@ -1,18 +1,19 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulaire d'enregistrement d'un nouveau client</title>
-</head>
-<body>
+{% extends "base.html" %}
+{% block titre %}Formulaire d'enregistrement d'un nouveau client{% endblock %}
+{% block contenu %}
     <h1>Enregistrer un nouveau client</h1>
-    <form action="./enregistrer_client" method="POST">
+    {% if erreur %}
+        <p class="erreur">{{ erreur }}</p>
+    {% endif %}
+    <form action="/enregistrer_client" method="POST">
         <label for="nom">Nom :</label>
-        <input type="text" id="nom" name="nom" required><br><br>
+        <input type="text" id="nom" name="nom" value="{{ saisie['nom'] if saisie else '' }}" required><br><br>
         <label for="prenom">Prénom :</label>
-        <input type="text" id="prenom" name="prenom" required><br><br>
+        <input type="text" id="prenom" name="prenom" value="{{ saisie['prenom'] if saisie else '' }}" required><br><br>
+        <label for="adresse">Adresse :</label>
+        <input type="text" id="adresse" name="adresse" value="{{ saisie['adresse'] if saisie else '' }}" required><br><br>
+        <label for="telephone">Téléphone :</label>
+        <input type="tel" id="telephone" name="telephone" value="{{ saisie['telephone'] if saisie else '' }}"><br><br>
         <button type="submit">Enregistrer</button>
     </form>
-</body>
-</html>
+{% endblock %}

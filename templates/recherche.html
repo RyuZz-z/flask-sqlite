@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block titre %}Recherche{% endblock %}
+{% block contenu %}
+    <h1>Rechercher un client</h1>
+    <form action="/recherche" method="get">
+        <input type="text" name="q" value="{{ q }}" placeholder="Nom ou prénom...">
+        <select name="tri">
+            {% for valeur, (libelle, colonne) in tris.items() %}
+                <option value="{{ valeur }}" {% if valeur == tri %}selected{% endif %}>Trier par {{ libelle|lower }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Rechercher</button>
+    </form>
+
+    {% if q %}
+        <p>{{ data|length }} résultat(s) pour « {{ q }} »</p>
+        <ul>
+        {% for row in data %}
+            <li><a href="/fiche_client/{{ row['id'] }}">{{ row['nom'] }} {{ row['prenom'] }}</a> <small>(créé le {{ row['created'] }})</small></li>
+        {% endfor %}
+        </ul>
+    {% endif %}
+{% endblock %}

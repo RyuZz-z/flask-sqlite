@@ -13,9 +13,12 @@
 import os
 import sqlite3
 
+from migrate import appliquer_migrations
+
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
-connection = sqlite3.connect(os.path.join(BASE_DIR, 'database.db'))
+DATABASE = os.path.join(BASE_DIR, 'database.db')
+connection = sqlite3.connect(DATABASE)
 
 with open(os.path.join(BASE_DIR, 'schema.sql'), encoding='utf-8') as f:
     connection.executescript(f.read())
@@ -33,5 +36,9 @@ cur.execute("INSERT INTO clients (nom, prenom, adresse) VALUES (?, ?, ?)", ('LEF
 
 connection.commit()
 connection.close()
+
+# Les migrations ajoutent les commandes d'exemple et les comptes
+# de démonstration (admin / password, user / 12345).
+appliquer_migrations(DATABASE)
 
 print("✅ Base de données créée : database.db")

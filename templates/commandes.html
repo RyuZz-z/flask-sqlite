@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block titre %}Commandes{% endblock %}
+{% block contenu %}
+    <h1>Toutes les commandes</h1>
+    <p>{{ commandes|length }} commande(s).</p>
+    <table>
+        <tr><th>N°</th><th>Client</th><th>Produit</th><th>Montant</th><th>Date</th></tr>
+        {% for commande in commandes %}
+        <tr>
+            <td>{{ commande['id'] }}</td>
+            <td><a href="/fiche_client/{{ commande['client_id'] }}">{{ commande['nom'] }} {{ commande['prenom'] }}</a></td>
+            <td>{{ commande['produit'] }}</td>
+            <td class="nombre">{{ '%.2f'|format(commande['montant']) }} €</td>
+            <td>{{ commande['date_commande'] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
