@@ -33,7 +33,9 @@
 
 🧩 **Défi** — mes requêtes / ma solution :
 
-   > 
+   >SELECT * from clients order by id desc limit 3;
+   >SELECT * from clients where prenom like 'A%';
+   >SELECT count(*) from clients where adresse like '%Paris%';   
 
 ---
 
